@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – QLD Real Estate Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F4762A;
+    --orange-light: #FF9A5C;
+    --orange-pale: #FFF0E6;
+    --dark: #1A1209;
+    --mid: #3D2B1A;
+    --warm-gray: #8C7B6B;
+    --cream: #FAF6F1;
+    --white: #FFFFFF;
+    --green: #2D7D5A;
+    --green-light: #E8F5EE;
+    --red: #C0392B;
+    --red-light: #FDECEA;
+    --blue: #1A5276;
+    --blue-light: #EAF2FB;
+    --purple: #6C3483;
+    --purple-light: #F4ECF7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--dark);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--orange); }
+  .unit-badge {
+    background: var(--orange);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%);
+    padding: 48px 32px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(244,118,42,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    max-width: 480px;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    font-weight: 300;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: var(--white);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--warm-gray);
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: #E8E0D8;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    width: 0%;
+  }
+  .progress-pct {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--orange);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* NAV TABS */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 2px solid #EDE6DE;
+    overflow-x: auto;
+    padding: 0 24px;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: none;
+    background: none;
+    padding: 14px 18px;
+    cursor: pointer;
+    color: var(--warm-gray);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+  }
+
+  /* MAIN CONTENT */
+  .main { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .tab-content { display: none; animation: fadeIn 0.3s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTION CARDS */
+  .section-intro {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid #EDE6DE;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-intro::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--orange);
+    border-radius: 4px 0 0 4px;
+  }
+  .section-intro h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .section-intro .emoji { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+  .section-intro p { color: var(--mid); font-size: 0.9rem; line-height: 1.65; }
+
+  /* KEY CONCEPT CARDS */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .concept-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #EDE6DE;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .concept-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .concept-card .card-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .concept-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .concept-card p { font-size: 0.82rem; color: var(--mid); line-height: 1.6; }
+  .concept-card .tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* SCENARIO BOX */
+  .scenario-box {
+    background: linear-gradient(135deg, #1A1209 0%, #3D2B1A 100%);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scenario-box::before {
+    content: '💡';
+    position: absolute;
+    right: 24px; top: 20px;
+    font-size: 2.5rem;
+    opacity: 0.2;
+  }
+  .scenario-box .tag-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .scenario-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .scenario-box p { color: rgba(255,255,255,0.75); font-size: 0.88rem; line-height: 1.7; }
+  .scenario-box .answer-reveal {
+    margin-top: 16px;
+    padding: 14px;
+    background: rgba(244,118,42,0.15);
+    border: 1px solid rgba(244,118,42,0.3);
+    border-radius: 10px;
+    color: var(--orange-light);
+    font-size: 0.85rem;
+    display: none;
+    line-height: 1.6;
+  }
+  .scenario-box .answer-reveal.show { display: block; }
+  .reveal-btn {
+    margin-top: 14px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reveal-btn:hover { background: var(--orange-light); }
+
+  /* FLASHCARDS */
+  .flashcard-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .flashcard-counter {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--warm-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .flashcard {
+    width: 100%;
+    max-width: 520px;
+    height: 220px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  .flashcard-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px;
+    text-align: center;
+  }
+  .flashcard-front {
+    background: var(--white);
+    border: 2px solid var(--orange);
+    flex-direction: column;
+    gap: 10px;
+  }
+  .flashcard-front .front-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+  }
+  .flashcard-front .term {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+  .flashcard-front .tap-hint {
+    font-size: 0.75rem;
+    color: var(--warm-gray);
+    margin-top: 4px;
+  }
+  .flashcard-back {
+    background: linear-gradient(135deg, var(--orange) 0%, #E8621A 100%);
+    transform: rotateY(180deg);
+    flex-direction: column;
+    gap: 10px;
+  }
+  .flashcard-back .back-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.7);
+  }
+  .flashcard-back .definition {
+    font-size: 0.9rem;
+    color: white;
+    line-height: 1.6;
+  }
+  .card-nav {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .card-nav-btn {
+    background: var(--white);
+    border: 2px solid #EDE6DE;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--dark);
+    transition: all 0.2s;
+  }
+  .card-nav-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .card-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* QUIZ */
+  .quiz-question {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid #EDE6DE;
+  }
+  .quiz-question .q-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .quiz-question h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 18px;
+    line-height: 1.45;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    background: #FAF6F1;
+    border: 2px solid #EDE6DE;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--mid);
+    transition: all 0.2s;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .quiz-option:hover:not(:disabled) { border-color: var(--orange); color: var(--dark); background: var(--orange-pale); }
+  .quiz-option.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .quiz-option.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-option .opt-letter {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    min-width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #EDE6DE;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .quiz-option.correct .opt-letter { background: var(--green); color: white; }
+  .quiz-option.wrong .opt-letter { background: var(--red); color: white; }
+  .quiz-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    display: none;
+    line-height: 1.55;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: var(--green-light); color: var(--green); border: 1px solid rgba(45,125,90,0.2); }
+  .quiz-feedback.wrong { background: var(--red-light); color: var(--red); border: 1px solid rgba(192,57,43,0.2); }
+
+  .quiz-score-bar {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 24px;
+    border: 1px solid #EDE6DE;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .score-display {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--orange);
+  }
+  .score-label { font-size: 0.85rem; color: var(--warm-gray); }
+
+  /* MIND MAP */
+  .mindmap-wrap {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid #EDE6DE;
+    overflow-x: auto;
+  }
+  .mindmap-wrap h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 24px;
+    color: var(--dark);
+  }
+  .mindmap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 360px;
+  }
+  .mm-center {
+    background: var(--orange);
+    color: white;
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .mm-branch {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-left: 20px;
+  }
+  .mm-branch::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 18px;
+    width: 16px; height: 2px;
+    background: var(--orange);
+  }
+  .mm-node {
+    flex: 1;
+  }
+  .mm-node-title {
+    background: var(--dark);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .mm-node-title:hover { background: var(--mid); }
+  .mm-node-title .mm-arrow { margin-left: auto; transition: transform 0.25s; }
+  .mm-node-title.open .mm-arrow { transform: rotate(90deg); }
+  .mm-leaves {
+    display: none;
+    padding: 10px 0 4px 16px;
+    gap: 6px;
+    flex-direction: column;
+  }
+  .mm-leaves.open { display: flex; }
+  .mm-leaf {
+    background: var(--orange-pale);
+    border: 1px solid rgba(244,118,42,0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: var(--mid);
+    line-height: 1.5;
+    position: relative;
+    padding-left: 20px;
+  }
+  .mm-leaf::before {
+    content: '›';
+    position: absolute;
+    left: 8px;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  /* CHECKLISTS */
+  .checklist-section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid #EDE6DE;
+  }
+  .checklist-section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #F0EAE2;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 6px;
+    padding-left: 4px;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item:hover { background: var(--orange-pale); }
+  .check-box {
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    border: 2px solid #DDD4C8;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.7rem;
+  }
+  .checklist-item.checked .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .checklist-item.checked .check-text { text-decoration: line-through; color: var(--warm-gray); }
+  .check-text { font-size: 0.87rem; color: var(--mid); line-height: 1.5; }
+
+  /* SECTION DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 20px;
+  }
+  .divider-line { flex: 1; height: 1px; background: #EDE6DE; }
+  .divider-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
+    white-space: nowrap;
+  }
+
+  /* LEGISLATION TABLE */
+  .leg-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    margin-bottom: 24px;
+  }
+  .leg-table th {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--dark);
+    color: white;
+    padding: 12px 14px;
+    text-align: left;
+  }
+  .leg-table th:first-child { border-radius: 10px 0 0 0; }
+  .leg-table th:last-child { border-radius: 0 10px 0 0; }
+  .leg-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #EDE6DE;
+    color: var(--mid);
+    vertical-align: top;
+  }
+  .leg-table tr:last-child td { border-bottom: none; }
+  .leg-table tr:nth-child(even) td { background: #FAF6F1; }
+  .leg-table td:first-child { font-weight: 500; color: var(--dark); }
+  .leg-act { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--orange); }
+
+  /* TOOLTIP TERMS */
+  .key-term {
+    border-bottom: 2px dotted var(--orange);
+    cursor: help;
+    position: relative;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .main { padding: 20px 16px 60px; }
+    .tab-btn { padding: 12px 12px; font-size: 0.7rem; }
+    .concepts-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Score tracker */
+  .score-tracker {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--dark);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 50;
+    transition: transform 0.3s;
+  }
+  .score-tracker .dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+
+  .info-box {
+    background: var(--blue-light);
+    border: 1px solid rgba(26,82,118,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--blue);
+    line-height: 1.6;
+  }
+  .info-box strong { font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+
+  .warning-box {
+    background: var(--red-light);
+    border: 1px solid rgba(192,57,43,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--red);
+    line-height: 1.6;
+  }
+  .warning-box strong { font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+
+  .success-box {
+    background: var(--green-light);
+    border: 1px solid rgba(45,125,90,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--green);
+    line-height: 1.6;
+  }
+  .success-box strong { font-family: 'Syne', sans-serif; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">QLD Real<span>Estate</span> Prep</div>
+  <div class="unit-badge">Unit 1 · CPPREP4001</div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">📚 Learner Study Hub</div>
+  <h1>Prepare for Professional Practice in Real Estate</h1>
+  <p>5 topics · Flashcards · Scenarios · Quiz · Checklist — everything you need to nail Unit 1.</p>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">Your Progress</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-pct" id="progressPct">0%</div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('summary')">📋 Summary</button>
+  <button class="tab-btn" onclick="switchTab('mindmap')">🧠 Mind Map</button>
+  <button class="tab-btn" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('scenarios')">🏠 Scenarios</button>
+  <button class="tab-btn" onclick="switchTab('quiz')">✅ Quiz</button>
+  <button class="tab-btn" onclick="switchTab('checklist')">📝 Checklist</button>
+</nav>
+
+<div class="main">
+
+  <!-- ══════════════ SUMMARY TAB ══════════════ -->
+  <div class="tab-content active" id="tab-summary">
+
+    <div class="section-intro">
+      <span class="emoji">🎯</span>
+      <h2>What This Unit Is About</h2>
+      <p>Unit 1 gives you the foundations of working in real estate in Queensland. It covers how agencies are structured, who does what, the laws you must follow, how to get your registration, and how to communicate with clients. Think of it as your "rules of the game" before you start playing.</p>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Topic 1 — Agency Structure</div><div class="divider-line"></div></div>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="card-icon" style="background:#FFF0E6;">🏢</div>
+        <h3>What is "Agency"?</h3>
+        <p>The legal relationship where a vendor or lessor (Principal) hires an agent to connect them with a buyer or tenant (Third Party). The signed document is called a <strong>PO Form 6</strong>.</p>
+        <span class="tag" style="background:#FFF0E6; color:#F4762A;">Core Concept</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#E8F5EE;">👥</div>
+        <h3>Client vs. Customer</h3>
+        <p><strong>Client</strong> = pays the agency, has a signed agreement (usually the vendor/landlord). <strong>Customer</strong> = does business with you but doesn't pay you (usually buyer/tenant).</p>
+        <span class="tag" style="background:#E8F5EE; color:#2D7D5A;">Key Distinction</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#EAF2FB;">⚖️</div>
+        <h3>Two Departments</h3>
+        <p><strong>Sales</strong>: Lists and sells using Exclusive, Open, or Sole Agency Agreements. <strong>Property Management</strong>: Lists and manages using Management & Leasing Agency Agreements.</p>
+        <span class="tag" style="background:#EAF2FB; color:#1A5276;">Structure</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#F4ECF7;">🤝</div>
+        <h3>Agent's #1 Obligation</h3>
+        <p>Hired by the seller → always act in their best interest. Sell at the <strong>best price, shortest time, best terms</strong>. Must still be fair to buyers.</p>
+        <span class="tag" style="background:#F4ECF7; color:#6C3483;">Ethics</span>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Topic 2 — Legal Structures</div><div class="divider-line"></div></div>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="card-icon" style="background:#FFF0E6;">🏭</div>
+        <h3>Company / Corporation</h3>
+        <p>Most common structure. Limited liability, separate legal identity, registered through ASIC. Directors carry significant legal responsibility.</p>
+        <span class="tag" style="background:#FFF0E6; color:#F4762A;">Most Common</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#E8F5EE;">🧍</div>
+        <h3>Sole Trader</h3>
+        <p>One person owns and runs the business. <strong>All debts and liabilities are yours personally</strong> — no separation between business and personal assets.</p>
+        <span class="tag" style="background:#FDECEA; color:#C0392B;">Full Liability</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#EAF2FB;">👫</div>
+        <h3>Partnership</h3>
+        <p>Two or more people, <strong>jointly and severally liable</strong> for ALL debts — even debts you didn't know about. A legal partnership agreement is strongly advised.</p>
+        <span class="tag" style="background:#FDECEA; color:#C0392B;">Shared Liability</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#F4ECF7;">🛡️</div>
+        <h3>Trust</h3>
+        <p>Offers asset protection, tax benefits, income splitting, and succession continuity. Often used by established agencies to protect wealth.</p>
+        <span class="tag" style="background:#E8F5EE; color:#2D7D5A;">Asset Protection</span>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Topic 3 — Legislation</div><div class="divider-line"></div></div>
+
+    <table class="leg-table">
+      <thead><tr><th>Law / Body</th><th>Level</th><th>What It Does</th></tr></thead>
+      <tbody>
+        <tr><td><span class="leg-act">ACCC</span></td><td>Commonwealth</td><td>Enforces fair trade. Educates, negotiates, litigates breaches.</td></tr>
+        <tr><td><span class="leg-act">Office of Fair Trading (OFT)</span></td><td>Queensland</td><td>Regulates real estate agents, handles licenses, complaints, trust account audits.</td></tr>
+        <tr><td><span class="leg-act">Property Occupations Act 2014</span></td><td>QLD State</td><td>Main law for real estate in QLD. Sets conduct standards, licensing, and consumer protections.</td></tr>
+        <tr><td><span class="leg-act">Anti-Discrimination Act 1991</span></td><td>QLD State</td><td>Prohibits discrimination on age, race, sex, disability, religion, and 15+ other grounds.</td></tr>
+        <tr><td><span class="leg-act">Property Law Act 1974</span></td><td>QLD State</td><td>Governs property ownership, transfers, and interests in land.</td></tr>
+        <tr><td><span class="leg-act">RTRA Act 2008</span></td><td>QLD State</td><td>Governs landlord-tenant relationships and rental tenancy processes.</td></tr>
+        <tr><td><span class="leg-act">EEO Act 1987</span></td><td>Commonwealth</td><td>Equal employment opportunity — fair hiring, promotion, and conditions for all employees.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <strong>⚠️ Section 97 Warning — Acting Without a Licence</strong>
+      Performing real estate activities without a current licence = up to <strong>$30,960 fine</strong> (200 penalty units × $154.80) or <strong>2 years imprisonment</strong>. Do not let your registration lapse!
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Topic 4 — Licensing & Registration</div><div class="divider-line"></div></div>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="card-icon" style="background:#FFF0E6;">📋</div>
+        <h3>Salesperson Registration</h3>
+        <p>Minimum to work in real estate. Must be 18+, complete <strong>12 units</strong> of CPP41419 Cert IV. Allows sales AND property management work. Cannot conduct auctions or operate trust accounts.</p>
+        <span class="tag" style="background:#FFF0E6; color:#F4762A;">Entry Level</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#E8F5EE;">🏆</div>
+        <h3>Real Estate Agent Licence</h3>
+        <p>Required to own or run an agency. Must complete <strong>19 units</strong> of CPP41419 Cert IV. Must be 18+ and a "fit and proper person" as assessed by OFT.</p>
+        <span class="tag" style="background:#E8F5EE; color:#2D7D5A;">Full Licence</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#EAF2FB;">🔄</div>
+        <h3>CPD Requirements</h3>
+        <p>From June 2025, ALL agents (registration holders, licensees, letting agents, auctioneers) must complete annual Continuing Professional Development requirements.</p>
+        <span class="tag" style="background:#EAF2FB; color:#1A5276;">Annual</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#F4ECF7;">🔑</div>
+        <h3>Principal Licensee</h3>
+        <p>Every place of business must have a licensed Licensee in Charge. They're responsible for all employees' actions under <strong>vicarious liability</strong> laws.</p>
+        <span class="tag" style="background:#F4ECF7; color:#6C3483;">Responsibility</span>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Topic 5 — Communication</div><div class="divider-line"></div></div>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="card-icon" style="background:#FFF0E6;">⚡</div>
+        <h3>First Impressions — 3 Seconds!</h3>
+        <p>54% appearance · 39% voice tone · 7% words. Your appearance communicates before you speak. Look professional, always.</p>
+        <span class="tag" style="background:#FFF0E6; color:#F4762A;">Must Know</span>
+      </div>
+      <div class="concept-card">
+        <div class="card-icon" style="background:#E8F5EE;">😤</div>
+        <h3>4 F's for Complaints</h3>
+        <p><strong>Fine / Feel / Felt / Found</strong>: "That's fine, I understand how you feel. Others have felt the same, and what we've found is…" Categorise as factual, misunderstanding, or unreasonable.</p>
+        <span class="tag" style="background:#E8F5EE; color:#2D7D5A;">Script</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ MIND MAP TAB ══════════════ -->
+  <div class="tab-content" id="tab-mindmap">
+    <div class="mindmap-wrap">
+      <h2>🧠 Interactive Mind Map — Click each branch to expand</h2>
+      <div class="mindmap">
+        <div class="mm-center">CPPREP4001 — Professional Practice in Real Estate</div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">🏢 Agency Structure <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Agency = Vendor/Lessor hires Agent to find Buyer/Tenant</div>
+              <div class="mm-leaf">Client (pays you, signed PO Form 6) vs Customer (doesn't pay)</div>
+              <div class="mm-leaf">Sales Dept → Exclusive, Open, Sole Agency Agreements</div>
+              <div class="mm-leaf">PM Dept → Management & Leasing Agency Agreements</div>
+              <div class="mm-leaf">Services: Residential, Commercial, Auctioneering, Buyer's Agent, Business Broker</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">⚖️ Legal Structures <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Company → Limited liability, registered with ASIC. Most common.</div>
+              <div class="mm-leaf">Sole Trader → One person. All debts = personal liability.</div>
+              <div class="mm-leaf">Partnership → Joint + several liability (even for debts you didn't cause)</div>
+              <div class="mm-leaf">Trust → Asset protection, tax minimisation, income splitting</div>
+              <div class="mm-leaf">Franchise vs Network vs Independent — each has trade-offs in cost/freedom</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">📜 Key Legislation <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Property Occupations Act 2014 → Main QLD real estate law</div>
+              <div class="mm-leaf">OFT → Licenses, complaints, trust account oversight</div>
+              <div class="mm-leaf">ACCC → Federal fair trading enforcement</div>
+              <div class="mm-leaf">Anti-Discrimination Act 1991 → 15+ protected attributes in QLD</div>
+              <div class="mm-leaf">RTRA Act 2008 → Landlord & tenant rights</div>
+              <div class="mm-leaf">Section 97 → No licence = up to $30,960 or 2 years jail</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">🪪 Licensing <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Salesperson Registration → 12 units, can sell + manage, can't auction or operate trust accounts</div>
+              <div class="mm-leaf">Real Estate Licence → 19 units, can own/run agency</div>
+              <div class="mm-leaf">Auctioneer → Specific Auctioneer Licence required</div>
+              <div class="mm-leaf">CPD required annually from June 2025 for all agents</div>
+              <div class="mm-leaf">"Fit and Proper Person" assessed by OFT — character, history, solvency</div>
+              <div class="mm-leaf">Vicarious Liability → Licensee responsible for staff actions</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">👥 Key Personnel <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Principal Licensee → In charge of office, supervises all staff</div>
+              <div class="mm-leaf">Sales Agent → Lists and sells properties</div>
+              <div class="mm-leaf">Sales Manager → Monitors team targets and performance</div>
+              <div class="mm-leaf">Property Manager → Manages rental properties</div>
+              <div class="mm-leaf">BDO → Business Development Officer, grows the business via cold calling etc.</div>
+              <div class="mm-leaf">Accounts Manager → Invoices, contractors, trust accounts</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">💬 Communication <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">First impression in 3 seconds: 54% look, 39% voice, 7% words</div>
+              <div class="mm-leaf">Non-verbal = body language, facial expressions, appearance</div>
+              <div class="mm-leaf">Barriers = language, culture, emotion, gender, physical, discrimination</div>
+              <div class="mm-leaf">4 F's complaints model: Fine / Feel / Felt / Found</div>
+              <div class="mm-leaf">3 complaint types: Factual statement / Misunderstanding / Unreasonable demand</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-branch">
+          <div class="mm-node">
+            <div class="mm-node-title" onclick="toggleBranch(this)">💰 Employment & Pay <span class="mm-arrow">›</span></div>
+            <div class="mm-leaves">
+              <div class="mm-leaf">Governed by Real Estate Industry Award 2020</div>
+              <div class="mm-leaf">Debit/Credit structure → wages debited against commission earned</div>
+              <div class="mm-leaf">Commission Only → Must be Level 2+, 12 months experience, min $57,948 earned</div>
+              <div class="mm-leaf">Min commission only rate = 31.5% of employer's gross commission</div>
+              <div class="mm-leaf">Written employment agreement signed on or before first day, lodged with REEF</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ FLASHCARDS TAB ══════════════ -->
+  <div class="tab-content" id="tab-flashcards">
+    <div class="section-intro">
+      <h2>🃏 Key Terms Flashcards</h2>
+      <p>Tap a card to flip it and reveal the definition. Use the arrows to move through all 16 cards.</p>
+    </div>
+    <div class="flashcard-area">
+      <div class="flashcard-counter" id="flashcard-counter">Card 1 of 16</div>
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <div class="front-label">Term</div>
+            <div class="term" id="fc-term">Agency</div>
+            <div class="tap-hint">👆 Tap to reveal definition</div>
+          </div>
+          <div class="flashcard-back">
+            <div class="back-label">Definition</div>
+            <div class="definition" id="fc-def">The legal relationship where a vendor/lessor (Principal) instructs an agent to bring a buyer or tenant into a legal relationship. The starting document is the PO Form 6.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-nav">
+        <button class="card-nav-btn" id="prevBtn" onclick="prevCard()" disabled>← Prev</button>
+        <button class="card-nav-btn" onclick="shuffleCards()">🔀 Shuffle</button>
+        <button class="card-nav-btn" id="nextBtn" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SCENARIOS TAB ══════════════ -->
+  <div class="tab-content" id="tab-scenarios">
+    <div class="section-intro">
+      <h2>🏠 Real-World Scenarios</h2>
+      <p>Real estate situations you might face on the job or in your assessment. Read the scenario, think about your answer, then reveal it.</p>
+    </div>
+
+    <div class="scenario-box">
+      <div class="tag-label">Scenario 1 — Obligations</div>
+      <h3>The Buyer's Best Friend</h3>
+      <p>You've been working with buyers Mark and Sarah for months. You found them a great property listed by another agent. During negotiations, you start to feel sorry for them and want to push the price down as much as possible, even if it hurts the vendor. Is this correct behaviour?</p>
+      <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="answer-reveal">❌ No! Your obligation is to the client — the vendor — who signed the PO Form 6 and pays your commission. The buyers are customers. You must be fair to them, but your primary duty is to get the best price and terms for the seller. Taking the buyer's side in negotiations is a conflict of interest.</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="tag-label">Scenario 2 — Licensing</div>
+      <h3>The Expired Registration</h3>
+      <p>Jake's salesperson registration expired 6 weeks ago. He forgot to renew it but he's still showing properties and taking offers for his agency. His boss didn't notice. What's the legal situation?</p>
+      <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="answer-reveal">⚠️ Jake is committing an offence under Section 97 of the Property Occupations Act 2014. The maximum penalty is $30,960 OR 2 years imprisonment. His expired certificate can only be restored within a 3-month restoration window at a higher cost. His agency could also face consequences under vicarious liability rules.</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="tag-label">Scenario 3 — Legislation</div>
+      <h3>The Rental Application Rejection</h3>
+      <p>A landlord tells you to reject rental applications from people with children. She says "my property isn't suited for kids." What do you do?</p>
+      <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="answer-reveal">❌ You must refuse this instruction. Rejecting tenants based on parental status is unlawful discrimination under Queensland's Anti-Discrimination Act 1991. You cannot discriminate on the basis of parental status, race, religion, gender, disability, or many other protected attributes. You must advise the landlord this is illegal and that you cannot act on this instruction.</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="tag-label">Scenario 4 — Complaints</div>
+      <h3>The Angry Tenant at the Counter</h3>
+      <p>A tenant bursts into the office furious that maintenance hasn't been done for 3 weeks. Other clients are in the waiting area watching. She's raising her voice. What's your approach?</p>
+      <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="answer-reveal">✅ First, move her to a private area away from other clients. Then use the 4 F's: "That's fine Ms [Name], I understand how you feel. Other tenants have felt the same. What we've found is we can arrange this today." Acknowledge her feelings, stay calm, don't argue. This is likely a Factual Statement complaint — something went wrong. Apologise, agree on action, and follow through.</div>
+    </div>
+
+    <div class="scenario-box">
+      <div class="tag-label">Scenario 5 — Business Structure</div>
+      <h3>The Partnership Surprise</h3>
+      <p>Alex and Ben are partners in a real estate agency. Without Ben knowing, Alex takes out a loan in the partnership's name and defaults on it. Is Ben liable for the debt?</p>
+      <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="answer-reveal">⚠️ Yes. In a partnership, both parties are "jointly and severally" liable for ALL debts — even debts one partner wasn't aware of. Ben is legally responsible for Alex's debt. This is why having a proper legal partnership agreement is critical, and why many businesses prefer a company structure with limited liability.</div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ QUIZ TAB ══════════════ -->
+  <div class="tab-content" id="tab-quiz">
+    <div class="section-intro">
+      <h2>✅ Knowledge Check Quiz</h2>
+      <p>Test yourself on Unit 1 content. Select the best answer — you'll get instant feedback on each question.</p>
+    </div>
+
+    <div class="quiz-score-bar">
+      <div class="score-display" id="quizScore">0/10</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:0.85rem;">Quiz Score</div>
+        <div class="score-label">Answer all questions to see your result</div>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 1 of 10</div>
+      <h3>In real estate, who is considered the "client"?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q1')"><span class="opt-letter">A</span>The buyer who is looking to purchase a property</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q1')"><span class="opt-letter">B</span>The person who pays the agency and has a signed PO Form 6 agreement</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q1')"><span class="opt-letter">C</span>The tenant renting a property</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q1')"><span class="opt-letter">D</span>Any person who visits an open home</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 2 of 10</div>
+      <h3>What is the minimum number of training units required for a Salesperson Registration in QLD?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q2')"><span class="opt-letter">A</span>6 units</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q2')"><span class="opt-letter">B</span>19 units</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q2')"><span class="opt-letter">C</span>12 units</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q2')"><span class="opt-letter">D</span>10 units</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 3 of 10</div>
+      <h3>Under Section 97 of the Property Occupations Act 2014, what is the maximum penalty for acting as a property agent without a licence?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q3')"><span class="opt-letter">A</span>$5,000 fine or 6 months jail</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q3')"><span class="opt-letter">B</span>$15,000 fine or 1 year jail</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q3')"><span class="opt-letter">C</span>200 penalty units (~$30,960) or 2 years imprisonment</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q3')"><span class="opt-letter">D</span>$50,000 fine only</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 4 of 10</div>
+      <h3>A first impression is formed in just 3 seconds. What percentage is based on how you look?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q4')"><span class="opt-letter">A</span>7%</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q4')"><span class="opt-letter">B</span>39%</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q4')"><span class="opt-letter">C</span>54%</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q4')"><span class="opt-letter">D</span>70%</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 5 of 10</div>
+      <h3>Which QLD body is responsible for regulating real estate agents, processing licence applications, and receiving trust account audit reports?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q5')"><span class="opt-letter">A</span>ACCC</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q5')"><span class="opt-letter">B</span>REIQ</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q5')"><span class="opt-letter">C</span>Office of Fair Trading (OFT)</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q5')"><span class="opt-letter">D</span>ASIC</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 6 of 10</div>
+      <h3>What does "jointly and severally liable" mean in a partnership?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q6')"><span class="opt-letter">A</span>Each partner is only responsible for debts they personally created</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q6')"><span class="opt-letter">B</span>All partners share liability for ALL debts, even those they didn't know about</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q6')"><span class="opt-letter">C</span>Liability is split evenly between partners</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q6')"><span class="opt-letter">D</span>Partners are protected from personal liability</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 7 of 10</div>
+      <h3>What are the "4 F's" used in handling client complaints?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q7')"><span class="opt-letter">A</span>Firm / Fair / Frank / Final</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q7')"><span class="opt-letter">B</span>Follow / Fix / Forward / Fulfil</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q7')"><span class="opt-letter">C</span>Fine / Feel / Felt / Found</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q7')"><span class="opt-letter">D</span>Focus / Fact / Fix / Feedback</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 8 of 10</div>
+      <h3>Which of the following can a registered salesperson NOT do?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q8')"><span class="opt-letter">A</span>Show properties to potential buyers</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q8')"><span class="opt-letter">B</span>Negotiate on behalf of a buyer or seller</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q8')"><span class="opt-letter">C</span>Conduct auctions and operate trust accounts</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q8')"><span class="opt-letter">D</span>Advertise a property for sale or rent</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q8"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 9 of 10</div>
+      <h3>What does the legal concept of "vicarious liability" mean for a Principal Licensee?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q9')"><span class="opt-letter">A</span>They can avoid responsibility for staff mistakes</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q9')"><span class="opt-letter">B</span>They are responsible for actions done by employees within the scope of their employment</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q9')"><span class="opt-letter">C</span>Staff members are personally liable for all their own mistakes</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q9')"><span class="opt-letter">D</span>Only criminal acts are covered under this concept</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q9"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-question" data-answered="false">
+      <div class="q-num">Question 10 of 10</div>
+      <h3>In QLD, discrimination is UNLAWFUL in employment based on which of the following?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answerQ(this,false,'Q10')"><span class="opt-letter">A</span>Only race and gender</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q10')"><span class="opt-letter">B</span>Only age, disability and race</button>
+        <button class="quiz-option" onclick="answerQ(this,false,'Q10')"><span class="opt-letter">C</span>Employment history only</button>
+        <button class="quiz-option" onclick="answerQ(this,true,'Q10')"><span class="opt-letter">C</span>Age, sex, race, disability, religion, gender identity, pregnancy, parental status and many more</button>
+      </div>
+      <div class="quiz-feedback" id="fb-Q10"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ CHECKLIST TAB ══════════════ -->
+  <div class="tab-content" id="tab-checklist">
+    <div class="section-intro">
+      <h2>📝 Study Checklist</h2>
+      <p>Track what you've covered. Tick each item as you learn it — your progress bar will update above!</p>
+    </div>
+
+    <div class="checklist-section">
+      <h3>🏢 Agency Structure & Services</h3>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand what "agency" means and how the principal/agent/third party relationship works</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can explain the difference between a "client" and a "customer" in real estate</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the difference between the Sales department and Property Management department</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can name the types of agency services (residential, commercial, auctioneering, buyer's agent, business broker)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand an agent's obligations to the vendor, purchaser, and other parties</div></div>
+    </div>
+
+    <div class="checklist-section">
+      <h3>⚖️ Legal Structures & Key Personnel</h3>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can describe Company, Sole Trader, Partnership, and Trust structures and their pros/cons</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand what "jointly and severally liable" means in a partnership</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the role of the Principal Licensee and the concept of vicarious liability</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can describe the key roles: Sales Agent, Property Manager, BDO, Accounts Manager, Office Manager</div></div>
+    </div>
+
+    <div class="checklist-section">
+      <h3>📜 Legislation</h3>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know what the Property Occupations Act 2014 does and who it regulates</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the role of the OFT (Office of Fair Trading) and what they oversee</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand Section 97 — the consequences of acting without a licence ($30,960 or 2 years)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can identify protected attributes under the Anti-Discrimination Act 1991</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the purpose of the RTRA Act 2008 and who it protects</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand the conduct standards under Sections 18–22 (conflict of interest, prior agents, client instructions)</div></div>
+    </div>
+
+    <div class="checklist-section">
+      <h3>🪪 Licensing Requirements</h3>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the difference between Salesperson Registration (12 units) and Agent Licence (19 units)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand what a Salesperson can and CANNOT do (no auctions, no trust accounts)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the "fit and proper person" concept and what OFT considers</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know that CPD requirements start June 2025 for all agents</div></div>
+    </div>
+
+    <div class="checklist-section">
+      <h3>💰 Employment & Communication</h3>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand the debit/credit commission structure used in real estate pay</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I know the requirements for Commission Only employment (Level 2+, 12 months exp, $57,948 min earnings)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I understand the 3-second first impression breakdown (54% look / 39% voice / 7% words)</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can apply the 4 F's model (Fine/Feel/Felt/Found) for handling complaints</div></div>
+      <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">I can categorise complaints as Factual, Misunderstanding, or Unreasonable Demand</div></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="score-tracker">
+  <div class="dot"></div>
+  <span id="trackerText">0 items checked</span>
+</div>
+
+<script>
+// ── TAB SWITCHING ──────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── MIND MAP ──────────────────────
+function toggleBranch(el) {
+  el.classList.toggle('open');
+  const leaves = el.nextElementSibling;
+  leaves.classList.toggle('open');
+}
+
+// ── FLASHCARDS ──────────────────────
+const cards = [
+  { term: "Agency", def: "The legal relationship where a vendor/lessor (Principal) instructs an agent to bring a buyer or tenant into a legal relationship. The PO Form 6 is the key document." },
+  { term: "PO Form 6", def: "The official Queensland listing agreement (agency agreement) signed by the client (vendor/landlord). Whoever signs this is your client — they pay your commission." },
+  { term: "Client vs. Customer", def: "Client = person who pays the agency and has a signed PO Form 6 (usually vendor or landlord). Customer = person who does business with you but doesn't pay you (usually buyer or tenant)." },
+  { term: "Vicarious Liability", def: "The legal concept where an employer (Principal Licensee) is responsible for actions performed by their employees within the scope of their work — even if the employer wasn't directly involved." },
+  { term: "Property Occupations Act 2014", def: "The main QLD state legislation governing real estate agents. Sets conduct standards, licensing requirements, disciplinary procedures, and consumer protections. Administered by OFT." },
+  { term: "Office of Fair Trading (OFT)", def: "The Queensland government regulator for real estate. Manages licence applications, complaints, trust account audits, and oversees compliance with the Property Occupations Act 2014." },
+  { term: "Sole Trader", def: "A business structure where one person owns the business. Simple to set up, but ALL debts and liabilities are personally the owner's — there is no separation between business and personal assets." },
+  { term: "Jointly & Severally Liable", def: "A partnership concept where ALL partners are equally responsible for ALL debts of the business — even debts they weren't aware of or didn't cause. This is why partnerships carry high personal risk." },
+  { term: "Salesperson Registration", def: "The minimum QLD qualification to work in real estate (12 units of CPP41419). Allows you to sell, manage properties, and negotiate. You CANNOT conduct auctions or operate trust accounts." },
+  { term: "Real Estate Agent Licence", def: "Full QLD licence requiring 19 units of CPP41419. Required to own or operate a real estate agency. Holders are also assessed as 'fit and proper persons' by OFT." },
+  { term: "Fit and Proper Person", def: "An OFT assessment of character, past conduct, and suitability to hold a real estate licence. Considers criminal history, insolvency, prior disciplinary actions, and overall character." },
+  { term: "The 4 F's", def: "A complaint handling technique: Fine / Feel / Felt / Found. 'That's fine, I understand how you feel. Others have felt the same, and what we've found is…' Defuses tension professionally." },
+  { term: "Debit/Credit Structure", def: "A real estate pay model where wages (including super and tax) are debited against commission earned. If commission exceeds wages, the salesperson receives the difference as extra income." },
+  { term: "Commission Only Agreement", def: "An arrangement where a salesperson earns only commissions — no base wage. Requires Level 2+, at least 12 months industry experience, and minimum annual earnings of $57,948. Minimum rate = 31.5% of gross commission." },
+  { term: "ACCC", def: "Australian Competition and Consumer Commission — the federal body that enforces fair trade laws. Educates industries, negotiates compliance, and prosecutes breaches of the Trade Practices Act 1974." },
+  { term: "RTRA Act 2008", def: "Residential Tenancies and Rooming Accommodation Act 2008 — governs the landlord/tenant relationship in QLD. Sets rights, responsibilities, and the legal process for rental agreements from start to finish." },
+];
+
+let currentCard = 0;
+let shuffledCards = [...cards];
+
+function updateCardDisplay() {
+  const card = shuffledCards[currentCard];
+  document.getElementById('fc-term').textContent = card.term;
+  document.getElementById('fc-def').textContent = card.def;
+  document.getElementById('flashcard-counter').textContent = `Card ${currentCard + 1} of ${shuffledCards.length}`;
+  document.getElementById('prevBtn').disabled = currentCard === 0;
+  document.getElementById('nextBtn').disabled = currentCard === shuffledCards.length - 1;
+  // Reset flip
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function nextCard() {
+  if (currentCard < shuffledCards.length - 1) { currentCard++; updateCardDisplay(); }
+}
+function prevCard() {
+  if (currentCard > 0) { currentCard--; updateCardDisplay(); }
+}
+function shuffleCards() {
+  shuffledCards = [...cards].sort(() => Math.random() - 0.5);
+  currentCard = 0;
+  updateCardDisplay();
+}
+
+// ── QUIZ ──────────────────────
+let quizScore = 0;
+let answeredCount = 0;
+const feedbacks = {
+  Q1: { correct: "✅ Correct! The client is whoever has a signed PO Form 6 and pays the commission — usually the vendor or landlord.", wrong: "❌ Not quite. The 'client' specifically refers to the person who pays the agency and has signed a PO Form 6. Buyers and tenants are 'customers'." },
+  Q2: { correct: "✅ Correct! Salesperson Registration = 12 units. Full Agent Licence = 19 units.", wrong: "❌ Not quite. Salesperson Registration requires 12 units of CPP41419 Certificate IV. 19 units is required for a full Real Estate Agent Licence." },
+  Q3: { correct: "✅ Correct! 200 penalty units × $154.80 = $30,960 fine OR 2 years imprisonment. Always keep your registration current!", wrong: "❌ Not quite. Section 97 sets the maximum at 200 penalty units ($30,960) or 2 years imprisonment. It's serious — always renew on time." },
+  Q4: { correct: "✅ Correct! 54% look, 39% voice tone, 7% words. Your appearance matters more than what you actually say!", wrong: "❌ Not quite. Appearance accounts for 54% of a first impression — more than your voice (39%) or your words (7%)." },
+  Q5: { correct: "✅ Correct! The OFT (Office of Fair Trading) is the QLD regulator for real estate. They handle licences, complaints, and trust account audits.", wrong: "❌ Not quite. The OFT is the QLD-specific real estate regulator. The ACCC is federal (fair trading), REIQ is an industry body, and ASIC handles corporations." },
+  Q6: { correct: "✅ Correct! Jointly and severally liable means all partners share responsibility for ALL debts — even those they didn't know about. This is a key risk of partnerships.", wrong: "❌ Not quite. 'Jointly and severally liable' means each partner can be held responsible for the full amount of any partnership debt, regardless of who created it." },
+  Q7: { correct: "✅ Correct! Fine / Feel / Felt / Found — a powerful technique to defuse complaints and maintain client relationships.", wrong: "❌ Not quite. The 4 F's are Fine / Feel / Felt / Found: 'That's fine, I understand how you feel. Others have felt the same, and what we've found is…'" },
+  Q8: { correct: "✅ Correct! Registered salespersons CANNOT conduct auctions or operate trust accounts. Those require additional licensing.", wrong: "❌ Not quite. The two things a registered salesperson cannot do are: conduct auctions and operate trust accounts." },
+  Q9: { correct: "✅ Correct! Vicarious liability means the Principal Licensee is legally responsible for what their employees do (or fail to do) within the scope of their work.", wrong: "❌ Not quite. Vicarious liability means employers — specifically the Principal Licensee — are legally responsible for their staff's actions during the course of employment." },
+  Q10: { correct: "✅ Correct! QLD's Anti-Discrimination Act 1991 covers a wide range of protected attributes including age, sex, race, religion, disability, gender identity, pregnancy, parental status, and more.", wrong: "❌ Not quite. QLD has one of the broadest anti-discrimination laws, covering 15+ protected attributes including religion, pregnancy, parental status, gender identity, and many others." },
+};
+
+function answerQ(btn, isCorrect, qId) {
+  const questionEl = btn.closest('.quiz-question');
+  if (questionEl.dataset.answered === 'true') return;
+  questionEl.dataset.answered = 'true';
+  answeredCount++;
+
+  const allBtns = questionEl.querySelectorAll('.quiz-option');
+  allBtns.forEach(b => { b.disabled = true; });
+  
+  const fb = document.getElementById('fb-' + qId);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizScore++;
+    fb.className = 'quiz-feedback correct show';
+    fb.textContent = feedbacks[qId].correct;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'quiz-feedback wrong show';
+    fb.textContent = feedbacks[qId].wrong;
+    // Highlight the correct one
+    allBtns.forEach(b => {
+      if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+    });
+  }
+
+  document.getElementById('quizScore').textContent = `${quizScore}/10`;
+  updateProgress();
+}
+
+// ── CHECKLIST ──────────────────────
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  const box = item.querySelector('.check-box');
+  box.textContent = item.classList.contains('checked') ? '✓' : '';
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.checklist-item').length;
+  const checked = document.querySelectorAll('.checklist-item.checked').length;
+  const pct = Math.round((checked / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('trackerText').textContent = `${checked} of ${total} items checked`;
+}
+
+// ── SCENARIOS ──────────────────────
+function revealAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent = answer.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+
+// Init
+updateCardDisplay();
+updateProgress();
+</script>
+</body>
+</html>
